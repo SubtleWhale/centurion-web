@@ -182,7 +182,7 @@ function tick() {
   const secInMin      = Math.floor((ms % 60000) / 1000);
   const secsLeft      = 60 - secInMin;
   const fracElapsed   = (ms % 60000) / 60000;
-  const warn          = secsLeft <= 10;
+  const warn          = secsLeft <= 5;
 
   // Bell at each minute boundary
   if (completed > lastBellAt) {

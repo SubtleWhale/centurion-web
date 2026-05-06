@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="theme-color" content="#0d0500">
+  <title>Centurion</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- PAGE INTRO -->
+  <div id="page-intro" class="page hidden">
+    <div class="page-content">
+      <div class="hero">
+        <div class="hero-icon">🍺</div>
+        <h1>CENTURION</h1>
+        <p class="hero-sub">Le défi ultime de la bière</p>
+      </div>
+
+      <div class="card">
+        <h2>Les Règles</h2>
+        <ul class="rules">
+          <li>Boire <strong>1 shooter</strong> de bière toutes les minutes</li>
+          <li>Une <strong>cloche sonne</strong> à chaque minute — c'est le signal pour boire</li>
+          <li>Vous avez jusqu'à la prochaine cloche pour finir votre shooter</li>
+          <li><strong>Interdit</strong> de prendre des shooters d'avance</li>
+          <li><strong>Interdit</strong> de mettre en pause pour les pauses pipi</li>
+          <li>Celui qui n'a pas bu à temps est <strong>éliminé</strong></li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h2>Paramètres</h2>
+        <div class="setting-row">
+          <span class="setting-label">Nombre de shooters</span>
+          <div class="num-input">
+            <button id="btn-minus" class="btn-round" aria-label="Diminuer">−</button>
+            <input id="num-shooters" type="number" value="100" min="1" max="100" inputmode="numeric">
+            <button id="btn-plus" class="btn-round" aria-label="Augmenter">+</button>
+          </div>
+        </div>
+        <div class="beer-equiv">
+          ≈ <span id="beer-liters" class="beer-num">3.3</span> litres de bière
+          <span class="beer-detail">(3cl × <span id="beer-count">100</span> shooters)</span>
+        </div>
+        <div class="duration-line">
+          Durée totale : <strong id="game-duration">1h40</strong>
+        </div>
+      </div>
+
+      <button id="btn-start" class="btn-primary btn-large">COMMENCER LA PARTIE</button>
+    </div>
+  </div>
+
+  <!-- PAGE JEU -->
+  <div id="page-game" class="page hidden">
+    <div class="page-content game-layout">
+
+      <div class="game-header">
+        <div class="shot-block">
+          <span class="shot-label">SHOOTER</span>
+          <div class="shot-row">
+            <span id="cur-shot" class="shot-num">1</span>
+            <span class="shot-sep">/ <span id="total-shots">100</span></span>
+          </div>
+        </div>
+        <div class="remaining-block">
+          <span id="shots-left" class="remaining-num">99</span>
+          <span class="remaining-label">restants</span>
+        </div>
+      </div>
+
+      <div class="glass-section" id="timer-wrap">
+        <svg id="shot-svg" viewBox="0 0 100 200" class="shot-glass" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <defs>
+            <linearGradient id="beer-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stop-color="#ffd060"/>
+              <stop offset="100%" stop-color="#b86c00"/>
+            </linearGradient>
+            <clipPath id="glass-clip">
+              <polygon points="14,22 86,22 66,164 34,164"/>
+            </clipPath>
+          </defs>
+          <!-- Beer fill -->
+          <rect id="beer-fill" x="0" y="164" width="100" height="0"
+                fill="url(#beer-grad)" clip-path="url(#glass-clip)"/>
+          <!-- Foam -->
+          <rect id="beer-foam" x="0" y="164" width="100" height="0"
+                fill="rgba(255,255,255,0.88)" clip-path="url(#glass-clip)"/>
+          <!-- Glass body (subtle translucent fill) -->
+          <polygon points="10,18 90,18 68,168 32,168" fill="rgba(255,255,255,0.04)"/>
+          <!-- Glass outline -->
+          <polygon points="10,18 90,18 68,168 32,168"
+                   fill="none" stroke="rgba(255,255,255,0.75)" stroke-width="2.5" stroke-linejoin="round"/>
+          <!-- Top rim -->
+          <line x1="10" y1="18" x2="90" y2="18"
+                stroke="rgba(255,255,255,0.9)" stroke-width="3.5" stroke-linecap="round"/>
+          <!-- Base -->
+          <rect x="26" y="168" width="48" height="12" rx="2.5"
+                fill="rgba(255,255,255,0.1)" stroke="rgba(255,255,255,0.75)" stroke-width="2"/>
+          <!-- Left shine -->
+          <line x1="19" y1="26" x2="23" y2="156"
+                stroke="rgba(255,255,255,0.22)" stroke-width="3.5" stroke-linecap="round"/>
+          <!-- Right accent -->
+          <line x1="74" y1="26" x2="72" y2="80"
+                stroke="rgba(255,255,255,0.1)" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        <div class="timer-display">
+          <span id="timer-secs" class="timer-digits">60</span>
+          <span class="timer-unit">sec</span>
+        </div>
+      </div>
+
+      <div class="progress-section">
+        <div class="progress-track">
+          <div id="progress-bar" class="progress-fill"></div>
+        </div>
+        <div class="progress-info">
+          <span id="progress-pct">0%</span> complété
+        </div>
+      </div>
+
+      <button id="btn-abandon" class="btn-danger">Abandonner la partie</button>
+    </div>
+
+    <!-- Overlay cloche -->
+    <div id="bell-overlay" class="bell-overlay hidden" role="alert">
+      <div class="bell-inner">
+        <div class="bell-icon">🔔</div>
+        <div class="bell-cta">BOIRE !</div>
+        <div class="bell-hint">Appuyez pour fermer</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PAGE FIN -->
+  <div id="page-end" class="page hidden">
+    <div class="page-content end-layout">
+      <div class="end-trophy">🏆</div>
+      <h1 class="end-title">CENTURION !</h1>
+      <p class="end-sub">Félicitations aux survivants !</p>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div id="stat-shots" class="stat-val">100</div>
+          <div class="stat-lbl">Shooters bus</div>
+        </div>
+        <div class="stat-card">
+          <div id="stat-liters" class="stat-val">3.3L</div>
+          <div class="stat-lbl">Bière avalée</div>
+        </div>
+        <div class="stat-card">
+          <div id="stat-duration" class="stat-val">1h40</div>
+          <div class="stat-lbl">Durée du défi</div>
+        </div>
+      </div>
+
+      <button id="btn-new-game" class="btn-primary btn-large">NOUVELLE PARTIE</button>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

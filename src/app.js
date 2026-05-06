@@ -106,7 +106,7 @@ const beerCountEl  = $('beer-count');
 const gameDurEl    = $('game-duration');
 
 function refreshCalc() {
-  const n = clamp(parseInt(numInput.value), 1, 100);
+  const n = clamp(parseInt(numInput.value), 10, 1000);
   beerLitersEl.textContent = beerLiters(n);
   beerCountEl.textContent  = n;
   gameDurEl.textContent    = fmtDuration(n);
@@ -115,17 +115,17 @@ function refreshCalc() {
 numInput.addEventListener('input', refreshCalc);
 
 $('btn-minus').addEventListener('click', () => {
-  const v = clamp(parseInt(numInput.value), 1, 100);
+  const v = clamp(parseInt(numInput.value), 10, 1000);
   if (v > 1) { numInput.value = v - 1; refreshCalc(); }
 });
 
 $('btn-plus').addEventListener('click', () => {
-  const v = clamp(parseInt(numInput.value), 1, 100);
-  if (v < 100) { numInput.value = v + 1; refreshCalc(); }
+  const v = clamp(parseInt(numInput.value), 10, 1000);
+  if (v < 1000) { numInput.value = v + 1; refreshCalc(); }
 });
 
 $('btn-start').addEventListener('click', () => {
-  const n = clamp(parseInt(numInput.value), 1, 100);
+  const n = clamp(parseInt(numInput.value), 10, 1000);
   state = { status: 'playing', numShooters: n, gameStartTime: Date.now() };
   saveState();
   startGame();

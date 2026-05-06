@@ -280,7 +280,7 @@ h2 {
 .game-header {
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
+  align-items: flex-end;
 }
 
 .shot-block {
@@ -299,7 +299,6 @@ h2 {
 
 .shot-row {
   display: flex;
-  align-items: baseline;
   gap: 6px;
 }
 

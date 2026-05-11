@@ -559,3 +559,27 @@ h2 {
   .stat-card { padding: 12px; display: flex; align-items: center; gap: 12px; }
   .stat-val { margin-bottom: 0; }
 }
+
+/* ── Dev toolbar ──────────────────────────────────────────────────────────── */
+.dev-toolbar {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  margin-top: 12px;
+}
+
+.btn-dev {
+  background: rgba(255, 80, 0, 0.15);
+  border: 1px solid rgba(255, 80, 0, 0.5);
+  color: #ff8040;
+  border-radius: 8px;
+  padding: 8px 16px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  letter-spacing: 0.05em;
+}
+
+.btn-dev:active {
+  background: rgba(255, 80, 0, 0.35);
+}

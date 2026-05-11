@@ -1,5 +1,8 @@
 'use strict';
 
+// DEV_START
+const DEV_MODE    = true;
+// DEV_END
 const SHOT_ML     = 30;   // 3cl
 const STORAGE_KEY = 'centurion_v1';
 
@@ -227,6 +230,23 @@ $('btn-abandon').addEventListener('click', () => {
   state = null;
   showPage('intro');
 });
+
+// DEV_START
+if (DEV_MODE) {
+  $('dev-toolbar').classList.remove('hidden');
+
+  $('btn-dev-skip').addEventListener('click', () => {
+    const completed = Math.floor(elapsed() / 60000);
+    state.gameStartTime = Date.now() - ((completed + 1) * 60000 + 50);
+    saveState();
+  });
+
+  $('btn-dev-end').addEventListener('click', () => {
+    cancelAnimationFrame(rafId);
+    endGame();
+  });
+}
+// DEV_END
 
 // ── End ────────────────────────────────────────────────────────────────────
 

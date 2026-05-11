@@ -544,6 +544,68 @@ h2 {
   line-height: 1.3;
 }
 
+/* ── FOOTER ── */
+
+.footer-credit {
+  margin-top: auto;
+  padding-top: 12px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+
+.footer-credit p {
+  font-size: 15px;
+  color: var(--muted);
+  letter-spacing: 0.3px;
+}
+
+.donate-btn {
+  display: inline-block;
+  border-radius: 10px;
+  overflow: hidden;
+  transition: transform 0.15s, opacity 0.15s;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.donate-btn img {
+  height: 140px;
+  width: auto;
+  display: block;
+}
+
+.donate-btn:active {
+  transform: scale(0.96);
+  opacity: 0.85;
+}
+
+.donate-end {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.donate-end-text {
+  font-size: 22px;
+  color: var(--muted);
+  font-style: italic;
+}
+
+.donate-end-arrow {
+  font-size: 26px;
+  color: var(--gold);
+  animation: arrowPulse 1.2s ease-in-out infinite;
+}
+
+@keyframes arrowPulse {
+  0%, 100% { transform: translateX(0); opacity: 1; }
+  50%       { transform: translateX(4px); opacity: 0.6; }
+}
+
 /* ── RESPONSIVE ── */
 
 @media (max-height: 600px) {

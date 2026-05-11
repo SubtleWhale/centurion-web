@@ -6,9 +6,9 @@ const DEV_MODE    = true;
 const SHOT_ML     = 30;   // 3cl
 const STORAGE_KEY = 'centurion_v1';
 
-// Shot glass fill geometry (matches SVG clip polygon points="14,22 86,22 66,164 34,164")
-const GLASS_BOTTOM_Y    = 164;
-const GLASS_FILL_HEIGHT = 142; // 164 - 22
+// Shot glass fill geometry (matches SVG clip polygon points="26,69 74,69 70,141 30,141")
+const GLASS_BOTTOM_Y    = 141;
+const GLASS_FILL_HEIGHT = 72; // 141 - 69
 const FOAM_MAX_H        = 10;
 
 // ── State ──────────────────────────────────────────────────────────────────
